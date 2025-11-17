@@ -1,6 +1,5 @@
 import { google } from 'googleapis';
 
-// Convierte "\\n" a saltos reales
 function normalizePrivateKey(key) {
     return key?.replace(/\\n/g, '\n');
 }
@@ -19,17 +18,18 @@ export default async function handler(req, res) {
     const {
         GOOGLE_SERVICE_ACCOUNT_EMAIL,
         GOOGLE_SERVICE_ACCOUNT_KEY,
-        GOOGLE_SHEETS_ID
+        GOOGLE_SHEETS_ID,
+        GOOGLE_SHEETS_RANGE
     } = process.env;
 
     if (!GOOGLE_SERVICE_ACCOUNT_EMAIL ||
         !GOOGLE_SERVICE_ACCOUNT_KEY ||
-        !GOOGLE_SHEETS_ID) {
+        !GOOGLE_SHEETS_ID ||
+        !GOOGLE_SHEETS_RANGE) {
         return res.status(500).json({ message: "Faltan variables de entorno" });
     }
 
     try {
-        // Autenticación con Service Account
         const auth = new google.auth.JWT(
             GOOGLE_SERVICE_ACCOUNT_EMAIL,
             null,
@@ -39,31 +39,29 @@ export default async function handler(req, res) {
 
         const sheets = google.sheets({ version: 'v4', auth });
 
-        // Leer cédulas ya registradas
+        // Leer cédulas existentes
         const existentes = await sheets.spreadsheets.values.get({
             spreadsheetId: GOOGLE_SHEETS_ID,
-            range: "hoja!A2:A" // SOLO cédulas
+            range: "hoja!A2:A"
         });
 
         const cedulas = existentes.data.values ? existentes.data.values.flat() : [];
 
-        // Cédula duplicada
         if (cedulas.includes(cedula.toString().trim())) {
             return res.status(409).json({ message: "duplicado" });
         }
 
-        // Guardar
         const fila = [
-            cedula.toString().trim(),
-            nombre.toString().trim(),
-            telefono.toString().trim(),
-            ciudad.toString().trim(),
-            grooming.toString().trim()
+            cedula.trim(),
+            nombre.trim(),
+            telefono.trim(),
+            ciudad.trim(),
+            grooming.trim()
         ];
 
         await sheets.spreadsheets.values.append({
             spreadsheetId: GOOGLE_SHEETS_ID,
-            range: "hoja!A:E",
+            range: GOOGLE_SHEETS_RANGE,   // 👈 ahora usa la variable
             valueInputOption: "USER_ENTERED",
             requestBody: { values: [fila] }
         });
