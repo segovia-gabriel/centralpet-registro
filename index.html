@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro Central Pet</title>
+    <link rel="stylesheet" href="public/style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Registro Central Pet</h2>
+
+    <form id="form">
+
+        <label>Cédula</label>
+        <input type="text" id="cedula" required>
+
+        <label>Nombre Completo</label>
+        <input type="text" id="nombre" required>
+
+        <label>Teléfono</label>
+        <input type="text" id="telefono" required>
+
+        <label>Ciudad</label>
+        <input type="text" id="ciudad" required>
+
+        <label>¿Trabajás o estudiás en el área grooming?</label>
+        <select id="grooming" required>
+            <option value="">Seleccionar...</option>
+            <option value="Sí">Sí</option>
+            <option value="No">No</option>
+        </select>
+
+        <button type="submit">Registrar</button>
+    </form>
+
+</div>
+
+<!-- Modal Éxito -->
+<div id="modalExito" class="modal hidden">
+    <div class="modal-content">
+        <p>¡Registro completado! Muchas gracias por participar 💚</p>
+        <button onclick="cerrarModales()">Cerrar</button>
+    </div>
+</div>
+
+<!-- Modal Duplicado -->
+<div id="modalDuplicado" class="modal hidden">
+    <div class="modal-content">
+        <p>Esta cédula ya fue registrada anteriormente ❌</p>
+        <button onclick="cerrarModales()">Cerrar</button>
+    </div>
+</div>
+
+<script src="public/script.js"></script>
+
+</body>
+</html>
