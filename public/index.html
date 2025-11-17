@@ -20,7 +20,16 @@
     <form id="form">
 
         <label>Cédula</label>
-        <input type="text" id="cedula" required>
+        <input 
+        type="number" 
+        id="cedula" 
+        required 
+        minlength="7" 
+        maxlength="7"
+        pattern="\d{7}"
+        inputmode="numeric"
+        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,7)"
+        >
 
         <label>Nombre Completo</label>
         <input type="text" id="nombre" required>
