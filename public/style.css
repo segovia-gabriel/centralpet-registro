@@ -133,3 +133,36 @@ button:hover {
   font-size: 16px;
   font-weight: 500;
 }
+
+.catalogos-box {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.catalogo-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #eef2f2;
+  border: 1px solid #d5dcdc;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--primary);
+  transition: 0.25s ease;
+}
+
+.catalogo-btn img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.catalogo-btn:hover {
+  background: #dfe7e7;
+  transform: translateY(-1px);
+}
